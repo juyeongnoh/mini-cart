@@ -25,6 +25,7 @@ async function getItem() {
 }
 
 // 2. 상품 목록 렌더링하기
+// 8. 장바구니 상품 중복 추가 방지 기능
 const generateProductCard = (id, imgSrc, name, price) => {
   const $productCard = document.createElement('article');
   const $wrapper = document.createElement('div');
@@ -95,6 +96,8 @@ $closeCartBtn.addEventListener('click', closeCart);
 $backdrop.addEventListener('click', closeCart);
 
 // 4. 장바구니 렌더링하기
+// 7. 장바구니 상품 삭제 기능
+// 9. 장바구니 상품 수량 수정 기능
 const generateCartItem = (id, imgSrc, name, price, count) => {
   const $li = document.createElement('li');
   const $imgWrapper = document.createElement('div');
@@ -147,10 +150,31 @@ const generateCartItem = (id, imgSrc, name, price, count) => {
   $contentWrapper.append($upperWrapper, $lowerWrapper);
   $li.append($imgWrapper, $contentWrapper);
 
+  $deleteBtn.addEventListener('click', () => {
+    const itemIdxInCart = cartList.findIndex((item) => item.id === id);
+    cartList.splice(itemIdxInCart, 1);
+    refreshCart();
+  });
+
+  $decreaseBtn.addEventListener('click', () => {
+    const itemIdxInCart = cartList.findIndex((item) => item.id === id);
+    if (cartList[itemIdxInCart].count > 1) cartList[itemIdxInCart].count--;
+    else alert('장바구니에 담을 수 있는 최소 수량은 1개입니다.');
+    refreshCart();
+  });
+
+  $increaseBtn.addEventListener('click', () => {
+    const itemIdxInCart = cartList.findIndex((item) => item.id === id);
+    if (cartList[itemIdxInCart].count < 10) cartList[itemIdxInCart].count++;
+    else alert('장바구니에 담을 수 있는 최대 수량은 10개입니다.');
+    refreshCart();
+  });
+
   return $li;
 };
 
 // 5. 장바구니 추가 기능
+// 6. 장바구니 총 가격 합산 기능
 const refreshCart = () => {
   $cartList.innerText = '';
 
