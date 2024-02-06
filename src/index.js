@@ -2,6 +2,10 @@
 
 const $productList = document.getElementById('product-list');
 const $productCardGrid = document.getElementById('product-card-grid');
+const $openCartBtn = document.getElementById('open-cart-btn');
+const $closeCartBtn = document.getElementById('close-cart-btn');
+const $shoppingCart = document.getElementById('shopping-cart');
+const $backdrop = document.getElementById('backdrop');
 
 // 1. 비동기 API 요청 모킹하기
 async function getItem() {
@@ -46,7 +50,32 @@ const generateProductCard = (id, imgSrc, name, price) => {
   $wrapper.append($img, $hover);
   $productCard.append($wrapper, $name, $price);
 
+  $productCard.addEventListener('click', openCart);
+
   return $productCard;
 };
 
 getItem();
+
+// 3. 장바구니 토글 기능
+const toggleCart = () => {
+  $shoppingCart.classList.toggle('translate-x-0');
+  $shoppingCart.classList.toggle('translate-x-full');
+  $backdrop.toggleAttribute('hidden');
+};
+
+const openCart = () => {
+  $shoppingCart.classList.toggle('translate-x-0', true);
+  $shoppingCart.classList.toggle('translate-x-full', false);
+  $backdrop.toggleAttribute('hidden', false);
+};
+
+const closeCart = () => {
+  $shoppingCart.classList.toggle('translate-x-0', false);
+  $shoppingCart.classList.toggle('translate-x-full', true);
+  $backdrop.toggleAttribute('hidden', true);
+};
+
+$openCartBtn.addEventListener('click', toggleCart);
+$closeCartBtn.addEventListener('click', closeCart);
+$backdrop.addEventListener('click', closeCart);
