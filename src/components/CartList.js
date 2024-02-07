@@ -16,7 +16,11 @@ class CartList {
 
   addCartItem(productData) {
     const newState = [...this.state, { ...productData, count: 1 }];
-    console.log(newState);
+    this.setState(newState);
+  }
+
+  removeCartItem(id) {
+    const newState = this.state.filter((item) => item.id !== id);
     this.setState(newState);
   }
 
@@ -27,7 +31,7 @@ class CartList {
         .toLocaleString() + '원';
     this.$container.innerHTML = this.state
       .map((item) => {
-        return `<li class="flex py-6" id="4">
+        return `<li class="flex py-6" id=${item.id}>
         <div
           class="h-24 w-24 overflow-hidden rounded-md border border-gray-200"
         >

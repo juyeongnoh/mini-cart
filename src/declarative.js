@@ -35,9 +35,17 @@ const addCartItem = (e) => {
   toggleCart();
 };
 
+const removeCartItem = (e) => {
+  if (e.target.className === 'remove-btn') {
+    const currentProductId = parseInt(e.target.closest('li').id);
+    cartList.removeCartItem(currentProductId);
+  }
+};
+
 fetchProductData();
 
 $openCartBtn.addEventListener('click', toggleCart);
 $closeCartBtn.addEventListener('click', toggleCart);
 $backdrop.addEventListener('click', toggleCart);
 $productCardGrid.addEventListener('click', addCartItem);
+$cartList.addEventListener('click', removeCartItem);
