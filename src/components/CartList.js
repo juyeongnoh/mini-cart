@@ -3,6 +3,7 @@ class CartList {
     this.$target = $target;
     this.$container = document.createElement('ul');
     this.$container.className = 'divide-y divide-gray-200';
+    this.$totalCount = document.getElementById('total-count');
     this.state = initialData;
     this.$target.append(this.$container);
     this.render();
@@ -20,6 +21,10 @@ class CartList {
   }
 
   render() {
+    this.$totalCount.innerHTML =
+      this.state
+        .reduce((acc, cur) => cur.price * cur.count + acc, 0)
+        .toLocaleString() + '원';
     this.$container.innerHTML = this.state
       .map((item) => {
         return `<li class="flex py-6" id="4">
