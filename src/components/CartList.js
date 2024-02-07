@@ -15,7 +15,19 @@ class CartList {
   }
 
   addCartItem(productData) {
-    const newState = [...this.state, { ...productData, count: 1 }];
+    let newState;
+    const clickedProductId = productData.id;
+    const checkedIdx = this.state.findIndex(
+      (item) => item.id === clickedProductId
+    );
+
+    if (checkedIdx === -1) {
+      newState = [...this.state, { ...productData, count: 1 }];
+    } else {
+      newState = [...this.state];
+      newState[checkedIdx].count++;
+    }
+
     this.setState(newState);
   }
 
