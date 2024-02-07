@@ -8,11 +8,15 @@ const $closeCartBtn = document.getElementById('close-cart-btn');
 const $shoppingCart = document.getElementById('shopping-cart');
 const $backdrop = document.getElementById('backdrop');
 const $cartList = document.getElementById('cart-list');
+const $paymentBtn = document.getElementById('payment-btn');
 
 let productData = [];
 
+const initialCartState = localStorage.getItem('cartState')
+  ? JSON.parse(localStorage.getItem('cartState'))
+  : [];
 const productList = new ProductList($productCardGrid, []);
-const cartList = new CartList($cartList, []);
+const cartList = new CartList($cartList, initialCartState);
 
 const toggleCart = () => {
   $shoppingCart.classList.toggle('translate-x-0');
@@ -53,6 +57,10 @@ const modifyCartItem = (e) => {
   }
 };
 
+const saveToLocalStorage = () => {
+  cartList.saveToLocalStorage();
+};
+
 fetchProductData();
 
 $openCartBtn.addEventListener('click', toggleCart);
@@ -60,3 +68,4 @@ $closeCartBtn.addEventListener('click', toggleCart);
 $backdrop.addEventListener('click', toggleCart);
 $productCardGrid.addEventListener('click', addCartItem);
 $cartList.addEventListener('click', modifyCartItem);
+$paymentBtn.addEventListener('click', saveToLocalStorage);

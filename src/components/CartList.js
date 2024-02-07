@@ -61,6 +61,10 @@ class CartList {
     this.setState(newState);
   }
 
+  saveToLocalStorage() {
+    localStorage.setItem('cartState', JSON.stringify(this.state));
+  }
+
   render() {
     this.$totalCount.innerHTML =
       this.state
