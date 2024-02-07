@@ -30,6 +30,7 @@ const addCartItem = (e) => {
   const clickedProduct = productData.find(
     (product) => product.id == e.target.dataset.productid
   );
+  if (!clickedProduct) return;
   cartList.addCartItem(clickedProduct);
   toggleCart();
 };
