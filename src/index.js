@@ -8,8 +8,11 @@ const $shoppingCart = document.getElementById('shopping-cart');
 const $backdrop = document.getElementById('backdrop');
 const $cartList = document.getElementById('cart-list');
 const $totalCount = document.getElementById('total-count');
+const $paymentBtn = document.getElementById('payment-btn');
 
-const cartList = [];
+const cartList = localStorage.getItem('cart')
+  ? JSON.parse(localStorage.getItem('cart'))
+  : [];
 
 // 1. 비동기 API 요청 모킹하기
 async function getItem() {
@@ -75,6 +78,8 @@ const toggleCart = () => {
   $shoppingCart.classList.toggle('translate-x-0');
   $shoppingCart.classList.toggle('translate-x-full');
   $backdrop.toggleAttribute('hidden');
+
+  refreshCart();
 };
 
 const openCart = () => {
@@ -193,3 +198,8 @@ const refreshCart = () => {
 
   $totalCount.innerText = totalCount.toLocaleString() + '원';
 };
+
+// 10. Web Storage API를 사용한 장바구니 데이터 저장 기능
+$paymentBtn.addEventListener('click', () => {
+  localStorage.setItem('cart', JSON.stringify(cartList));
+});
